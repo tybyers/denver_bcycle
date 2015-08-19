@@ -1,0 +1,93 @@
+---
+title: "Exploring Denver B-cycle data"
+author: "Tyler Byers"
+date: "August 18, 2015"
+output: html_document
+---
+
+```{r set_environment}
+library(ggplot2); library(dplyr); library(tidyr)
+library(lubridate); library(xml2); library(readxl)
+library(ggmap);
+Sys.setenv(TZ = 'America/Denver')
+```
+
+## B-cycle Data
+
+### Load the bcycle data, which we downloaded from https://denver.bcycle.com/company.  This study only uses 2014 data, from near the bottom of that page.
+
+```{r read_bcycle}
+bcycle <- read_excel('./data/2014denverbcycletripdata_public.xlsx')
+names(bcycle) <- c('program','user_id','zip','membership_type','bike',
+                   'checkout_date','checkout_time', 'checkout_kiosk',
+                   'return_date','return_time','return_kiosk',
+                   'duration_mins')
+head(bcycle)
+```
+
+It may work better if the kiosks are factor variables.
+```{r kiosks_as_factors}
+bcycle$checkout_kiosk <- as.factor(bcycle$checkout_kiosk)
+bcycle$return_kiosk <- as.factor(bcycle$return_kiosk)
+```
+
+The time in the columns is showing 1899 as a year due to horrifying Microsoft Excel behavior, so we're going to remove that.
+
+```{r fix_time}
+bcycle <- bcycle %>% separate(checkout_time, c('ugly_date','checkout_time'),
+                              sep = ' ') %>% select(-ugly_date)
+bcycle <- bcycle %>% separate(return_time, c('ugly_date', 'return_time'),
+                              sep = ' ') %>% select(-ugly_date)
+# convert these to datetime values
+bcycle$checkout_datetime <- ymd_hms(paste(bcycle$checkout_date,
+                                          bcycle$checkout_time),
+                                    tz = 'America/Denver')
+
+bcycle$return_datetime <- ymd_hms(paste(bcycle$return_date,
+                                          bcycle$return_time),
+                                    tz = 'America/Denver')
+```
+
+
+
+## Weather Data
+
+I like to use weather data from forecast.io.  The below chunk of code only needs to be run once, to fetch the weather from forecast.io for each day of 2014.  Each day's weather data will each be saved in a json file in the ./data/weather/ directory.
+
+### Download Weather Data
+
+Download the weather data from forecast.io to a local directory.
+
+```{r download_weather_data, eval=FALSE}
+dates <- seq(from = ymd('2014-01-01'), to = ymd('2014-12-31'), by = 'days')
+# Note, to get this to work outside of the author's environment, you will need
+# to get your own forecast.io API key at developer.forecast.io
+apikey <- read.table('./private/forecastio_apikey.dat')$V1
+weather_temp <- sapply(dates, function(daystr){
+    daystr <- as.character(daystr)
+    savedfile <- paste0('./data/weather/',daystr,'.json')
+    url <- paste0('https://api.forecast.io/forecast/',apikey,
+              '/39.7400,-104.9923,',daystr,'T00:00:00')
+    print(paste('Downloading weather for date',daystr))
+    download.file(url, savedfile)
+    print('Sleeping 8 seconds.')
+    Sys.sleep(8)
+})
+rm(weather_temp)
+```
+
+###Load Weather Data from Local Directory
+
+Since downloading weather data is slow, we don't want to download the data every time we need it.  Rather, it is saved to a local directory, and we load it from there.
+
+<<finish this later, after data downloaded>>
+
+
+
+Notes 8/18/2015
+* There are some bad return locations.  Filter those out. 
+* Lagged temperature variables?
+* Map with dot size for popularity of station.
+* Map with lines between stations?
+* Temperature variables -- average of high temp/low temp last few days.
+* Get ggmap to work

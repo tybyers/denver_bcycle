@@ -1,0 +1,482 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<kml xmlns='http://www.opengis.net/kml/2.2'>
+	<Document>
+		<name>Untitled layer</name>
+		<Placemark>
+			<name>Denver Pavilions (16th &amp; Glenarm)</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-104.990952,39.743362000000005,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Colorado Convention Center (14th &amp; Welton)</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-104.993956,39.742607,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Colorado Convention Center (14th &amp; Stout)</name>
+			<description><![CDATA[Station Sponsor - Spire Denver (http://www.spiredenver.com/)]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-104.999814,39.748856,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>11th and Odgen</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-104.975524,39.733264,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>13th and Grant</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-104.983313,39.736515,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>1401 Wynkoop St.</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-105.00329000000002,39.750011,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>15th and Tremont</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-104.99121,39.742092,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>16th and Boulder</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-105.010478,39.759447,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>16th and Platte St.</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-105.007946,39.757517,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>17th and California St</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-104.990995,39.74625,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>17th and Curtis St.</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-104.993548,39.747916,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>17th and Lincoln St.</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-104.985845,39.743428,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>18th and California St.</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-104.98975,39.747338,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>18th and Curtis</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-104.99284,39.748988,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>19th and Pearl St.</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-104.97930000000001,39.745953,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>22nd and Market St.</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-104.990544,39.755488,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>25th and Walnut St.</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-104.987068,39.758226,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>26th and Elliot St</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-105.02331,39.754614,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>32nd and Lowell Blvd</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-105.034382,39.76233400000001,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>32nd and Zuni St</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-105.015564,39.761839,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>7th and Logan St.</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-104.982648,39.727076,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>9th and Downing St.</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-104.97355,39.730261,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Cherry Creek Mall (By Fountain)</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-104.953701,39.715539,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Commons Park</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-105.00505,39.755455,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Coors Field Walkway</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-104.997067,39.754878,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>14th and Larimer St.</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-104.9999,39.746975,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Denver Public Library</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-104.988592,39.737587,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Buchtel Blvd and High St.</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-104.965053,39.685162,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>DU (Nagel Hall)</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-104.964409,39.677285,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>DU (Law School)</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-104.963701,39.679134,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Five Points</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-104.977841,39.754416,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Gart Plaza</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-104.952521,39.720606,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Gates Tennis Center</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-104.948584,39.714367,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>17th and Market (Guaranty Bank)</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-104.996488,39.750935,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Market Street Station</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-104.998333,39.750259,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Park Ave. West and Tremont</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-104.981081,39.750061,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Pepsi Center</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-105.00668,39.748955,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>REI</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-105.00966300000002,39.75468,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>State Capitol Building</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-104.9843,39.738643,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Tabor Center</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-104.995726,39.749541,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Tivoli at Auraria Campus</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-105.005018,39.744954,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Union Station</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-104.999481,39.753772,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Washington and Colfax</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-104.97856,39.739617,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Webb Building</name>
+			<description><![CDATA[Contact Denver Bike Sharing to sponsor this station.]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-104.990437,39.740442,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Style id='icon-22-normal'>
+			<IconStyle>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/22-blue-dot.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>0.0</scale>
+			</LabelStyle>
+		</Style>
+		<Style id='icon-22-highlight'>
+			<IconStyle>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/22-blue-dot.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>1.1</scale>
+			</LabelStyle>
+		</Style>
+		<StyleMap id='icon-22'>
+			<Pair>
+				<key>normal</key>
+				<styleUrl>#icon-22-normal</styleUrl>
+			</Pair>
+			<Pair>
+				<key>highlight</key>
+				<styleUrl>#icon-22-highlight</styleUrl>
+			</Pair>
+		</StyleMap>
+	</Document>
+</kml>
