@@ -14,7 +14,9 @@ Sys.setenv(TZ = 'America/Denver')
 
 ## B-cycle Data
 
-### Load the bcycle data, which we downloaded from https://denver.bcycle.com/company.  This study only uses 2014 data, from near the bottom of that page.
+### Load B-cycle Data
+
+Load the bcycle data, which we downloaded from https://denver.bcycle.com/company.  This study only uses 2014 data, from near the bottom of that page.
 
 ```{r read_bcycle}
 bcycle <- read_excel('./data/2014denverbcycletripdata_public.xlsx')
@@ -48,6 +50,159 @@ bcycle$return_datetime <- ymd_hms(paste(bcycle$return_date,
                                     tz = 'America/Denver')
 ```
 
+### Load Station Address Data
+
+One of the parts of this project will be exploring the number of miles ridden by the B-cyclers.  In order to do this, we need the station addresses.  To get the addresses, we went to the [B-cycle homepage](https://denver.bcycle.com), and painstakingly copied and pasted all of the marker names and addresses to an Excel spreadsheet (we could not find a way to do this programmatically that would be faster than grabbing the addresses by hand).  
+
+Below we open that spreadsheet and make sure we grabbed all the stations (it would be easy to forget some of them).
+
+```{r load_bcycle_stations}
+stations <- read_excel('./data/bcycle_stations.xlsx')
+stations <- as.data.frame(t(stations))
+stations <- stations[2:nrow(stations), c('V2','V4', 'V5')]
+rownames(stations) <- NULL
+names(stations) <- c('name','street_address','city_state_zip')
+```
+
+Do we have all the stations?
+
+```{r check_for_checkout_kiosks}
+unique_checkout_kiosks <- unique(bcycle$checkout_kiosk)
+length(unique_checkout_kiosks)
+length(unique(stations$name))
+which(!(unique_checkout_kiosks %in% stations$name))
+unique_checkout_kiosks[which(!(unique_checkout_kiosks %in% stations$name))]
+```
+
+First time through, we found we were missing the following stations:
+* 17th & Curtis 
+* 14th & Ogden 
+* 2045 Franklin
+
+The 17th & Curtis location was not on the current map on the B-cycle webpage (maybe it was moved?), so found the location on this otherwise outdated map: https://www.google.com/maps/d/viewer?mid=zlN1mPiliDOE.kbb3RbqyLl1w&hl=en_US.  The other two stations we had just missed, so added those to the excel worksheet.  So now there are 3 more stations in our data than there were used in 2014 -- likely B-cycle added some new stations for 2015, and our data reflects that.
+
+Which stations were added?
+
+```{r check_for_checkout_kiosks}
+unique_checkout_kiosks <- unique(bcycle$checkout_kiosk)
+length(unique_checkout_kiosks)
+length(unique(stations$name))
+which(!(stations$name %in% unique_checkout_kiosks))
+stations$name[which(!(stations$name %in% unique_checkout_kiosks))]
+```
+
+### Station Distances
+
+Now we want to use ggmap to get station distances.
+
+How many kiosk start/return pairs do we have?
+
+```{r kiosk_start_return}
+kiosk_pairs <- bcycle %>% 
+    group_by(checkout_kiosk, return_kiosk) %>%
+    summarise(n = n()) %>% arrange(-n)
+kiosk_pairs$checkout_address <- 
+    sapply(kiosk_pairs$checkout_kiosk, function(station){
+        s_row <- which(stations$name == as.character(station))
+        if(length(s_row) == 0) { # no match found
+            NA
+        } else {
+            paste0(stations$street_address[s_row], ', ',
+                   stations$city_state_zip[s_row])
+        }
+    } )
+
+kiosk_pairs$return_address <- 
+    sapply(kiosk_pairs$return_kiosk, function(station){
+        s_row <- which(stations$name == as.character(station))
+        if(length(s_row) == 0) { # no match found
+            NA
+        } else {
+            paste0(stations$street_address[s_row], ', ',
+                   stations$city_state_zip[s_row])
+        }
+    } )
+sum(is.na(kiosk_pairs$checkout_address))
+sum(is.na(kiosk_pairs$return_address))
+```
+
+Based on this, we have 0 invalid checkout addresses, but 137 lines of invalid return addresses.
+
+### Google Distance Matrix API
+
+Now we'll use the Google Distance Matrix API to get the distances between stations.
+
+However, we're limited to 2500 queries a day. So we're going to split up the kiosk pairs into 3 groups.
+
+```{r split_kiosk_pairs}
+kiosk_pairs1 <- kiosk_pairs[1:2300,]
+kiosk_pairs2 <- kiosk_pairs[2301:4600,]
+kiosk_pairs3 <- kiosk_pairs[4601:6800,]
+saveRDS(kiosk_pairs1, './data/kiokiosk_pairs1.rds')
+saveRDS(kiosk_pairs2, './data/kiokiosk_pairs2.rds')
+saveRDS(kiosk_pairs3, './data/kiokiosk_pairs3.rds')
+```
+
+Now use ggmap to get these distances, via bicycling.
+
+```{r ggmap_distance, eval = FALSE}
+distance_calculations <- function(kiosks) {
+    kiosks$distances <- NA
+    kiosks$time_sec <- NA
+    kiosks$status <- NA
+    err_count <- 0
+    for(i in 1:nrow(kiosks)){
+        ckout <- kiosks$checkout_address[i]
+        ret <- kiosks$return_address[i]
+        if(is.na(ret)) {
+            kiosks$status[i] <- 'return_invalid'
+        } else if (ckout == ret) {
+            kiosks$status[i] <- 'same_kiosk'
+        } else {
+            # mapdist sometimes errors out, we need to make a note this
+            # happened
+            tryCatch({
+                dcalc <- mapdist(from = ckout, to = ret, mode = 'bicycling')
+                kiosks$distances[i] <- dcalc$miles
+                kiosks$time_sec[i] <- dcalc$seconds
+                kiosks$status[i] <- 'ok' 
+            }, error = function(err) {
+                kiosks$status[i] <- 'error'
+                err_count <- err_count + 1
+            })
+        }
+        print(paste('Iteration: ', i))
+        print(paste('Checkout:', ckout))
+        print(paste('Return:', ret))
+        print(paste('Distance:', kiosks$distances[i]))
+        print(paste('Time (sec):', kiosks$time_sec[i]))
+        print(paste('Status:', kiosks$status[i]))
+        print(paste('Number of errors:', err_count))
+        Sys.sleep(2)  # So we don't use up our limit from the API
+    }
+    kiosks
+}
+```
+
+```{r get_distances}
+kiosk_pairs1 <- distance_calculations(kiosk_pairs1)
+names(kiosk_pairs1)[6:8] <- c('distance_miles', 'distance_seconds',
+                              'mapdist_status')
+# kiosk_pairs1$distance_miles <- map_dists1$distances
+# kiosk_pairs1$distance_seconds <- map_dists1$time_sec
+# kiosk_pairs1$mapdist_status <- map_dists1$status
+saveRDS(kiosk_pairs1, './data/kiokiosk_pairs1_withdist.rds')
+map_dists2 <- distance_calculations(kiosk_pairs2)
+kiosk_pairs2$distance_miles <- map_dists2$distance_miles
+kiosk_pairs2$distance_seconds <- map_dists2$distance_seconds
+kiosk_pairs2$mapdist_status <- map_dists2$status
+saveRDS(kiosk_pairs2, './data/kiokiosk_pairs2_withdist.rds')
+map_dists3 <- distance_calculations(kiosk_pairs3)
+kiosk_pairs3$distance_miles <- map_dists3$distance_miles
+kiosk_pairs3$distance_seconds <- map_dists3$distance_seconds
+kiosk_pairs3$mapdist_status <- map_dists3$status
+saveRDS(kiosk_pairs3, './data/kiokiosk_pairs3_withdist.rds')
+```
 
 
 ## Weather Data
