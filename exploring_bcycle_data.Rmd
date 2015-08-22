@@ -227,12 +227,28 @@ table(kiosk_pairs$mapdist_status)
 
 ### Add distances to B-cycle data
 
+Now we take the kiosk_pairs information, with information about how far it is between each station, and merge the data with the rest of the bcycle information.
+
 ```{r add_mapdistances}
 bcycle$ggmap_dist <- apply(bcycle, 1, function(x) { 
         kp_row <- kiosk_pairs %>% 
         filter(checkout_kiosk == x['checkout_kiosk'] &
                 return_kiosk == x['return_kiosk'])
         kp_row$distance_miles
+    })
+
+bcycle$ggmap_seconds <- apply(bcycle, 1, function(x) { 
+        kp_row <- kiosk_pairs %>% 
+        filter(checkout_kiosk == x['checkout_kiosk'] &
+                return_kiosk == x['return_kiosk'])
+        kp_row$distance_seconds
+    })
+
+bcycle$ggmap_status <- apply(bcycle, 1, function(x) { 
+        kp_row <- kiosk_pairs %>% 
+        filter(checkout_kiosk == x['checkout_kiosk'] &
+                return_kiosk == x['return_kiosk'])
+        kp_row$mapdist_status
     })
 ```
 
