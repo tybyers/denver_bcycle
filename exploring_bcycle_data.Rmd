@@ -188,21 +188,54 @@ distance_calculations <- function(kiosks) {
 kiosk_pairs1 <- distance_calculations(kiosk_pairs1)
 names(kiosk_pairs1)[6:8] <- c('distance_miles', 'distance_seconds',
                               'mapdist_status')
-# kiosk_pairs1$distance_miles <- map_dists1$distances
-# kiosk_pairs1$distance_seconds <- map_dists1$time_sec
-# kiosk_pairs1$mapdist_status <- map_dists1$status
 saveRDS(kiosk_pairs1, './data/kiokiosk_pairs1_withdist.rds')
-map_dists2 <- distance_calculations(kiosk_pairs2)
-kiosk_pairs2$distance_miles <- map_dists2$distance_miles
-kiosk_pairs2$distance_seconds <- map_dists2$distance_seconds
-kiosk_pairs2$mapdist_status <- map_dists2$status
+
+kiosk_pairs2 <- distance_calculations(kiosk_pairs2)
+names(kiosk_pairs2)[6:8] <- c('distance_miles', 'distance_seconds',
+                              'mapdist_status')
 saveRDS(kiosk_pairs2, './data/kiokiosk_pairs2_withdist.rds')
-map_dists3 <- distance_calculations(kiosk_pairs3)
-kiosk_pairs3$distance_miles <- map_dists3$distance_miles
-kiosk_pairs3$distance_seconds <- map_dists3$distance_seconds
-kiosk_pairs3$mapdist_status <- map_dists3$status
+
+kiosk_pairs3 <- distance_calculations(kiosk_pairs3)
+names(kiosk_pairs3)[6:8] <- c('distance_miles', 'distance_seconds',
+                              'mapdist_status')
 saveRDS(kiosk_pairs3, './data/kiokiosk_pairs3_withdist.rds')
 ```
+
+Open up the kiosk pairs and re-make into one dataframe.
+
+```{r kiosk_pairs}
+kiosk_pairs1 <- readRDS('./data/kiokiosk_pairs1_withdist.rds')
+kiosk_pairs2 <- readRDS('./data/kiokiosk_pairs2_withdist.rds')
+kiosk_pairs3 <- readRDS('./data/kiokiosk_pairs3_withdist.rds')
+kiosk_pairs$distance_miles <- c(kiosk_pairs1$distance_miles,
+                                kiosk_pairs2$distance_miles,
+                                kiosk_pairs3$distance_miles)
+kiosk_pairs$distance_seconds <- c(kiosk_pairs1$distance_seconds,
+                                  kiosk_pairs2$distance_seconds,
+                                  kiosk_pairs3$distance_seconds)
+kiosk_pairs$mapdist_status <- c(kiosk_pairs1$mapdist_status,
+                                  kiosk_pairs2$mapdist_status,
+                                  kiosk_pairs3$mapdist_status)
+```
+
+About the kiosk_pairs:
+
+```{r eda_kiosk_pairs}
+summary(kiosk_pairs)
+table(kiosk_pairs$mapdist_status)
+```
+
+### Add distances to B-cycle data
+
+```{r add_mapdistances}
+bcycle$ggmap_dist <- apply(bcycle, 1, function(x) { 
+        kp_row <- kiosk_pairs %>% 
+        filter(checkout_kiosk == x['checkout_kiosk'] &
+                return_kiosk == x['return_kiosk'])
+        kp_row$distance_miles
+    })
+```
+
 
 
 ## Weather Data
