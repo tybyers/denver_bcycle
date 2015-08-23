@@ -12,6 +12,9 @@ library(ggmap);
 Sys.setenv(TZ = 'America/Denver')
 ```
 
+This document shows our work in constructing the data sets for the Denver B-cycle 2014 data exploration. The data construction process was fairly painstaking, so it doesn't make sense to do that in the production-level script. Data sets are constructed and saved here.
+
+
 ## B-cycle Data
 
 ### Load B-cycle Data
@@ -252,6 +255,31 @@ bcycle$ggmap_status <- apply(bcycle, 1, function(x) {
     })
 ```
 
+### Save Updated B-Cycle data
+
+We've painstakingly added additional data to the original B-Cycle data.  Now save it out so in our production-level script we can access it easily.
+
+```{r save_new_bcycle_data}
+write_csv(bcycle, './data/bcycle_2014_ggmap_distances.csv')
+```
+
+### Get Geocode Data
+
+The station data also needs lat/long data to plot on the map.
+
+```{r geo_code}
+stations$lon <- NA
+stations$lat <- NA
+#for(i in 1:3) {
+for(i in 1:nrow(stations)) {
+    print(paste('iteration: ', i))
+    gc <- geocode(paste(stations[i,]$street_address,
+                        stations[i,]$city_state_zip))
+    stations[i,c('lon','lat')] <- gc
+    Sys.sleep(1)
+}
+write_csv(stations, './data/stations_address_geocode.csv')
+```
 
 
 ## Weather Data
@@ -286,6 +314,13 @@ Since downloading weather data is slow, we don't want to download the data every
 
 <<finish this later, after data downloaded>>
 
+## Weekdays, Months, Holidays
+
+```{r holidays}
+holidays <- c('2014-01-01', '2014-01-20', '2014-02-17', '2014-03-31',
+              '2014-05-26', '2014-07-04', '2014-09-01', '2014-10-13',
+              '2014-11-11', '2014-11-27', '2014-12-25')
+```
 
 
 Notes 8/18/2015
