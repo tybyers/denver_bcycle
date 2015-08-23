@@ -36,7 +36,7 @@ All data analysis was done using R in RStudio.  The following R packages are req
 ```r
 library(ggplot2); library(dplyr); library(tidyr)
 library(lubridate); library(xml2); library(readxl)
-library(ggmap);
+library(ggmap); library(logging); library(jsonlite)
 ```
 
 ## Comparison to B-cycle Annual Report
