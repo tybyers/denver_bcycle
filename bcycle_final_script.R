@@ -9,6 +9,7 @@
 ## See: https://github.com/tybyers/denver_bcycle for project details.
 ## 
 ##--------------------------------------------
+## Author:
 ##
 ## Tyler Byers
 ## tybyers@gmail.com
@@ -25,7 +26,7 @@ require(lubridate)
 require(jsonlite)
 require(ggmap)
 Sys.setenv(TZ = 'America/Denver')
-## Note: Since much data tidying occurred in the "exploring_bcycle_data.Rmd" 
+## Note: Since much of the data tidying occurred in the "exploring_bcycle_data.Rmd" 
 #  file, we don't need to load all the same packages here.
 
 ##----Set Working Directory----
@@ -46,8 +47,8 @@ read_bcycle_data <- function(data_path, logger = NA) {
         loginfo(paste('Formatting Date and Time columns'),logger)
     }
     
-    data$return_date <- as.Date(data$return_date)
-    data$checkout_date <- as.Date(data$checkout_date)
+    data$return_date <- as.Date(data$return_date, tz = 'America/Denver')
+    data$checkout_date <- as.Date(data$checkout_date, tz = 'America/Denver')
     data$return_datetime <- ymd_hms(data$return_datetime, 
                                     tz = 'America/Denver')
     data$checkout_datetime <- ymd_hms(data$checkout_datetime,
@@ -467,8 +468,7 @@ merge_bcycle_weather <- function(bcycle_data, weather, logger = NA) {
     merged_data <- left_join(weather, bcycle_data, by = 'datetime')
     merged_data <- merged_data %>% 
         select(c(-checkout_date, -checkout_hour, -checkout_month, 
-                 -checkout_week, -checkout_wday, -is_holiday,
-                 -cloud_cover))
+                 -checkout_week, -checkout_wday, -is_holiday))
     
     merged_data[is.na(merged_data$num_checkouts), 
                 c('num_checkouts', 'avg_duration', 'avg_distance')] <- 0
@@ -478,7 +478,8 @@ merge_bcycle_weather <- function(bcycle_data, weather, logger = NA) {
                 '2014-05-26', '2014-07-04', '2014-09-01', '2014-10-13',
                 '2014-11-11', '2014-11-27', '2014-12-25')
     merged_data$is_holiday <-
-        sapply(as.character(as.Date(merged_data$datetime)),
+        sapply(as.character(as.Date(merged_data$datetime, 
+                                    tz = 'America/Denver')),
                               function(date) {
         if(date %in% h_days){
             isholiday <- 1
@@ -494,6 +495,52 @@ merge_bcycle_weather <- function(bcycle_data, weather, logger = NA) {
     merged_data
 }
 
+find_top_days <- function(merged_data, logger = NA) {
+    if (is.function(logger)){
+        loginfo(paste('Finding highest and lowest days of ridership'),
+                logger)
+    }
+    
+    merged_data$date <- as.Date(merged_data$datetime,
+                                tz = 'America/Denver')
+    
+    data_by_date <- merged_data %>%
+        group_by(date) %>%
+        summarise(total_checkouts = sum(num_checkouts), 
+                  max_temp = max(temperature),
+                  min_temp = min(temperature))
+    data_by_date$weekday <- weekdays(data_by_date$date)
+    
+    print('Top 5 Days by Total Number of Checkouts:')
+    print(data_by_date %>% arrange(-total_checkouts) %>%
+              top_n(5, total_checkouts))
+    
+    print('Top 5 Days by Least Number of Checkouts:')
+    print(data_by_date %>% arrange(total_checkouts) %>%
+              top_n(5, -total_checkouts))
+}
+
+plot_weather_checkouts <- function(merged_data, logger = NA) {
+    if (is.function(logger)){
+        loginfo(paste('Plotting temperature vs checkouts.'),
+                logger)
+    }
+    
+    p1 <- ggplot(merged_data, aes(x = temperature, y = num_checkouts)) +
+        geom_point(alpha = 0.25) + geom_smooth(method = 'loess') +
+        xlab('Temperature (F)') +
+        ylab('Number of Checkouts') + 
+        ggtitle('Number of Checkouts vs. Temperature')
+    print(p1)
+    p1_filename <- './figures/checkouts_vs_temperature.png'
+    png(p1_filename)
+    print(p1)
+    dev.off()
+    if (is.function(logger)){
+        loginfo(paste('Saved plot to file:', p1_filename),logger)
+    }
+}
+
 fit_linear_model <- function(merged_data, logger = NA) {
     if (is.function(logger)){
         loginfo(paste('Fitting Linear Model to Data'),
@@ -503,9 +550,10 @@ fit_linear_model <- function(merged_data, logger = NA) {
     # Hourly and wday variables need to be factors
     merged_data$hour <- as.factor(merged_data$hour)
     merged_data$wday <- as.factor(merged_data$wday)
+    merged_data$temp_sq <- (merged_data$temperature)**2
     
     fol <- formula(num_checkouts ~ temperature + humidity + wday + 
-                       hour + is_holiday)
+                       temp_sq + hour + is_holiday + cloud_cover)
     fit <- lm(fol, merged_data)
     fit
 }
@@ -539,5 +587,8 @@ if(interactive()){
     bcycle_hourly <- hourly_rider_stats(bcycle_filtered, logger)
     weather <- load_weather_data(logger)
     merged_data <- merge_bcycle_weather(bcycle_hourly, weather, logger)
+    find_top_days(merged_data, logger)
+    plot_weather_checkouts(merged_data, logger)
     lm_fit <- fit_linear_model(merged_data, logger)
+    print(summary(lm_fit))
 }
