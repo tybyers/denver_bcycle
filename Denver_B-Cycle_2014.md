@@ -279,7 +279,8 @@ We have a few intepretations of the above model:
    * Humidity is not a significant predictor of ridership.
    * Proportion of cloud cover appears to be a signifant predictor, with a negative slope.  That is, a fully cloudy day will have, on average, 4 few riders per hour than an otherwise identical day that is fully sunny.
 
-   ##Summary
+
+##Summary
 
 Based on our short study of 2014 Denver B-cycle trip data, we found that we can create a linear model of trip ridership based on several calendar and clock variables merged with basic weather data.  Our study focused on total system ridership, on an hourly basis, rather than modeling specific checkout or return kiosks.  Most calendar variables are highly significant when predicting ridership, and weather variables such as temperature and amount of cloud cover appear to be as well. Based on R-squared, approximately 73.8% of the variation in hourly ridership can be explained by our simple model. 
 
