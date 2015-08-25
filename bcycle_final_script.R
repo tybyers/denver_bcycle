@@ -33,6 +33,8 @@ Sys.setenv(TZ = 'America/Denver')
 ## Note to user: you will need to change this value!
 setwd('~/UW_DataScience/MethodsDataAnalysis/final_project/')
 
+##----Read B-cycle data from file.  Use the gzip file
+##----bcycle_2014_ggmap_distances.csv.gz in the data directory
 read_bcycle_data <- function(data_path, logger = NA) {
     if (is.function(logger)){
         loginfo(paste('Unzipping and reading B-Cycle Data'),logger)
@@ -61,6 +63,7 @@ read_bcycle_data <- function(data_path, logger = NA) {
     data
 }
 
+##----Filter out bad/invalid trip data from B-cycle data
 filter_bad_data <- function(data, logger = NA) {
     if (is.function(logger)){
         loginfo(paste('Unzipping and reading B-Cycle Data'),logger)
@@ -113,6 +116,7 @@ filter_bad_data <- function(data, logger = NA) {
     data
 }
 
+##----Make a few charts and tables about B-cycle data
 explore_bcycle_data <- function(data, logger = NA) {
     if (is.function(logger)){
         loginfo(paste('Summary Statistics of filtered B-cycle data.'),logger)
@@ -139,6 +143,7 @@ explore_bcycle_data <- function(data, logger = NA) {
     print(head(sort(table(data$return_kiosk)), 12))
 }
 
+##----Map out the kiosks using ggmap
 map_kiosks <- function(data, logger = NA) {
 
     stations <- read_station_data(logger)
@@ -202,6 +207,7 @@ map_kiosks <- function(data, logger = NA) {
     
 }
 
+##----Read in the station/kiosk data from csv file
 read_station_data <- function(logger = NA) {
     
     if (is.function(logger)){
@@ -215,6 +221,8 @@ read_station_data <- function(logger = NA) {
     stations
 }
 
+##----Estimate the distance traveled when checkout kiosk and return kiosk
+##---- are the same.
 fill_samestation_distances <- function(data, logger) {
     if (is.function(logger)){
         loginfo(paste('Filling in distances for checkouts/returns',
@@ -236,7 +244,7 @@ fill_samestation_distances <- function(data, logger) {
             if(dist > 5) {  # cap estimated distance at 5 miles
                 dist = 5
             }
-        } else {
+        } else { # Keep distance if return kiosk different than checkout
             dist <- d_row['ggmap_dist']
         }
         dist
@@ -254,6 +262,7 @@ fill_samestation_distances <- function(data, logger) {
     data
 }
 
+##----Load weather data (downloaded earlier) from JSON files
 load_weather_data <- function(logger = NA) {
     if (is.function(logger)){
         loginfo(paste('Loading weather data from JSON.'),logger)
@@ -295,6 +304,7 @@ load_weather_data <- function(logger = NA) {
     weather_data
 }
 
+##----Add calendar variables for B-cycle data
 calendar_variables_bcycle <- function(data, logger = NA, holidays = FALSE) {
     if (is.function(logger)){
         loginfo(paste('Calculating calendar variables for bcycle'),logger)
@@ -323,6 +333,7 @@ calendar_variables_bcycle <- function(data, logger = NA, holidays = FALSE) {
     data
 }
 
+##----Get hourly ridership statistics
 hourly_rider_stats <- function(data, logger = NA) {
     if (is.function(logger)){
         loginfo(paste('Getting hourly ridership stats, by checkout.'),logger)
@@ -345,7 +356,7 @@ hourly_rider_stats <- function(data, logger = NA) {
     data_hourly
 }
 
-# Do various plots of checkouts by calendar factors
+##----Do various plots of checkouts by calendar factors
 plots_of_checkouts <- function(data, logger = NA) {
     if (is.function(logger)){
         loginfo(paste('Plotting Checkouts by Calendar Variables'),
@@ -455,6 +466,7 @@ plots_of_checkouts <- function(data, logger = NA) {
     
 }
 
+##----Merge B-cycle hourly data and weather data
 merge_bcycle_weather <- function(bcycle_data, weather, logger = NA) {
     if (is.function(logger)){
         loginfo(paste('Merging B-cycle and Weather Data'),
@@ -495,6 +507,7 @@ merge_bcycle_weather <- function(bcycle_data, weather, logger = NA) {
     merged_data
 }
 
+##----Find the days of most and least ridership during 2014
 find_top_days <- function(merged_data, logger = NA) {
     if (is.function(logger)){
         loginfo(paste('Finding highest and lowest days of ridership'),
@@ -520,6 +533,7 @@ find_top_days <- function(merged_data, logger = NA) {
               top_n(10, -total_checkouts))
 }
 
+##----Plot temperature vs. number of checkouts
 plot_weather_checkouts <- function(merged_data, logger = NA) {
     if (is.function(logger)){
         loginfo(paste('Plotting temperature vs checkouts.'),
@@ -543,6 +557,7 @@ plot_weather_checkouts <- function(merged_data, logger = NA) {
     
 }
 
+##----Fit a linear model to the data
 fit_linear_model <- function(merged_data, logger = NA) {
     if (is.function(logger)){
         loginfo(paste('Fitting Linear Model to Data'),
@@ -555,6 +570,7 @@ fit_linear_model <- function(merged_data, logger = NA) {
     merged_data$hour <- as.factor(merged_data$hour)
     merged_data$wday <- as.factor(merged_data$wday)
     merged_data$temp_sq <- (merged_data$temperature)**2
+    ## Many cloud cover NA values.  Set these to 0.
     merged_data$cloud_cover[is.na(merged_data$cloud_cover)] <- 0
     
     fol <- formula(num_checkouts ~ temperature + temp_sq + 
