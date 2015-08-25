@@ -308,25 +308,5 @@ weather_temp <- sapply(dates, function(daystr){
 rm(weather_temp)
 ```
 
-###Load Weather Data from Local Directory
-
-Since downloading weather data is slow, we don't want to download the data every time we need it.  Rather, it is saved to a local directory, and we load it from there.
-
-<<finish this later, after data downloaded>>
-
-## Weekdays, Months, Holidays
-
-```{r holidays}
-holidays <- c('2014-01-01', '2014-01-20', '2014-02-17', '2014-03-31',
-              '2014-05-26', '2014-07-04', '2014-09-01', '2014-10-13',
-              '2014-11-11', '2014-11-27', '2014-12-25')
-```
-
-
-Notes 8/18/2015
-* There are some bad return locations.  Filter those out. 
-* Lagged temperature variables?
-* Map with dot size for popularity of station.
-* Map with lines between stations?
-* Temperature variables -- average of high temp/low temp last few days.
-* Get ggmap to work
+### On to final script
+At this point, we have done enough data acquisition and intial processing to be able to move on to the final script -- `bcycle_final_script.R`.

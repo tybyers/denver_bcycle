@@ -513,11 +513,11 @@ find_top_days <- function(merged_data, logger = NA) {
     
     print('Top 5 Days by Total Number of Checkouts:')
     print(data_by_date %>% arrange(-total_checkouts) %>%
-              top_n(5, total_checkouts))
+              top_n(10, total_checkouts))
     
-    print('Top 5 Days by Least Number of Checkouts:')
+    print('Top 5 Days by Fewest Number of Checkouts:')
     print(data_by_date %>% arrange(total_checkouts) %>%
-              top_n(5, -total_checkouts))
+              top_n(10, -total_checkouts))
 }
 
 plot_weather_checkouts <- function(merged_data, logger = NA) {
@@ -539,6 +539,8 @@ plot_weather_checkouts <- function(merged_data, logger = NA) {
     if (is.function(logger)){
         loginfo(paste('Saved plot to file:', p1_filename),logger)
     }
+    
+    
 }
 
 fit_linear_model <- function(merged_data, logger = NA) {
@@ -548,12 +550,16 @@ fit_linear_model <- function(merged_data, logger = NA) {
     }
     
     # Hourly and wday variables need to be factors
+    merged_data$month <- month(merged_data$datetime)
+    merged_data$month <- as.factor(merged_data$month)
     merged_data$hour <- as.factor(merged_data$hour)
     merged_data$wday <- as.factor(merged_data$wday)
     merged_data$temp_sq <- (merged_data$temperature)**2
+    merged_data$cloud_cover[is.na(merged_data$cloud_cover)] <- 0
     
-    fol <- formula(num_checkouts ~ temperature + humidity + wday + 
-                       temp_sq + hour + is_holiday + cloud_cover)
+    fol <- formula(num_checkouts ~ temperature + temp_sq + 
+                       humidity + month + wday + 
+                        hour + is_holiday + cloud_cover)
     fit <- lm(fol, merged_data)
     fit
 }

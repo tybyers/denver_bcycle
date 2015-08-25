@@ -15,8 +15,8 @@ This is my final project for University of Washington's Methods for Data Analysi
  The following project files are in this project directory:
  
  * [README.md](https://github.com/tybyers/denver_bcycle/blob/master/README.md) -- This document, with project description.
- * [Denver_B-Cycle_2014.md](https://github.com/tybyers/denver_bcycle/blob/master/Denver_B-Cycle_2014.md) -- Final project writeup.
- * [bcycle_final_script.R](https://github.com/tybyers/denver_bcycle/blob/master/bcycle_final_script.R) -- Production-level final script.
+ * [Denver_B-Cycle_2014.md](https://github.com/tybyers/denver_bcycle/blob/master/Denver_B-Cycle_2014.md) -- **Final project writeup**.
+ * [bcycle_final_script.R](https://github.com/tybyers/denver_bcycle/blob/master/bcycle_final_script.R) -- **Production-level final script**.
  * [exploring_bcycle_data.Rmd](https://github.com/tybyers/denver_bcycle/blob/master/exploring_bcycle_data.Rmd) -- Contains code for data-set building (some processes are fairly complex and time-intensive and would not make sense to build in a production-level script) and initial data explorations.
  * [./data](https://github.com/tybyers/denver_bcycle/tree/master/data) -- Directory containing data files used in the scripts.
  * [./figures](https://github.com/tybyers/denver_bcycle/tree/master/figures) -- Directory with figures loaded into the final project writeup.
